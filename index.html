@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hummingbird — FY27 Microsoft Partner Playbook</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5F1E8; --cream-2:#EFE8D8; --ink:#1C1A16; --ink-soft:#59544C;
+    --red:#E5384B; --red-deep:#C22638; --line:#DED5C1; --white:#FFFEFB;
+    --red-glow: rgba(229,56,75,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#1C1A16; --cream-2:#252119; --ink:#F5F1E8; --ink-soft:#B9B2A4; --line:#3A352A; --white:#25221C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --cream:#1C1A16; --cream-2:#252119; --ink:#F5F1E8; --ink-soft:#B9B2A4; --line:#3A352A; --white:#25221C;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--cream); color:var(--ink); font-family:'Inter',system-ui,-apple-system,sans-serif; overflow-x:hidden; }
+  .display{ font-family:'Archivo',system-ui,sans-serif; font-weight:800; letter-spacing:-0.02em; }
+  a{ color:inherit; }
+
+  #progress{ position:fixed; top:0; left:0; height:3px; width:0%; background:var(--red); z-index:100; transition:width .08s linear; }
+
+  /* ---------- Reveal-on-scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .reveal-group.in > *{ transition-delay:calc(var(--i,0) * 90ms); }
+
+  /* ---------- Header / nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50; background:color-mix(in srgb, var(--cream) 90%, transparent);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .navwrap{ max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:14px clamp(20px,4vw,40px); }
+  .brand{ display:flex; align-items:center; gap:9px; font-size:13.5px; font-weight:600; }
+  .brand svg{ width:18px; height:18px; fill:var(--red); flex-shrink:0; }
+  nav.links{ position:relative; display:flex; gap:22px; flex-wrap:wrap; }
+  nav.links a{
+    position:relative; font-size:12.5px; font-weight:500; color:var(--ink-soft); text-decoration:none; padding:6px 0;
+    transition:color .15s ease; white-space:nowrap;
+  }
+  nav.links a:hover{ color:var(--ink); }
+  nav.links a.active{ color:var(--ink); }
+  .nav-indicator{
+    position:absolute; bottom:0; height:2px; background:var(--red); border-radius:2px;
+    transition:left .35s cubic-bezier(.2,.7,.2,1), width .35s cubic-bezier(.2,.7,.2,1); left:0; width:0;
+  }
+  .navRight{ display:flex; align-items:center; gap:10px; }
+  select.jump{
+    font-family:'Inter',sans-serif; font-size:12.5px; font-weight:500; color:var(--ink); background:var(--white);
+    border:1px solid var(--line); border-radius:7px; padding:7px 26px 7px 11px; cursor:pointer;
+    appearance:none; -webkit-appearance:none; display:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2359544C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 7px center;
+  }
+  @media (max-width:900px){ nav.links{ display:none; } select.jump{ display:inline-block; } }
+
+  section{ position:relative; max-width:1180px; margin:0 auto; padding:clamp(48px,7vw,92px) clamp(20px,4vw,40px); scroll-margin-top:66px; }
+  section.band{ max-width:none; padding-left:0; padding-right:0; overflow:hidden; }
+  section.band .inner{ max-width:1180px; margin:0 auto; padding:0 clamp(20px,4vw,40px); position:relative; }
+  section.band-tint{ background:var(--cream-2); }
+  section.band-dark{ background:var(--ink); color:var(--white); }
+  section.band-dark .sub{ color:#D8D2C4; }
+  section.band-dark h2{ color:var(--white); }
+
+  .eyebrow{ color:var(--red); font-weight:700; font-size:12px; letter-spacing:.13em; text-transform:uppercase; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .eyebrow::before{ content:""; width:16px; height:2px; background:var(--red); border-radius:2px; }
+  h1{ font-size:clamp(36px,6vw,66px); line-height:1.02; margin:0 0 18px; }
+  h2{ font-size:clamp(26px,4vw,40px); line-height:1.08; margin:0 0 14px; }
+  h3.blocktitle{ font-family:'Archivo',sans-serif; font-size:19px; font-weight:700; margin:0 0 12px; }
+  .sub{ font-size:clamp(13.5px,1.5vw,16.5px); color:var(--ink-soft); max-width:820px; line-height:1.6; margin:0 0 8px; }
+  .prepared{ font-weight:600; font-size:14px; margin-top:18px; }
+  .meta{ color:var(--ink-soft); font-size:12.5px; margin-top:4px; }
+
+  /* ---------- Hero ---------- */
+  #hero{ padding-top:clamp(56px,9vw,110px); min-height:88vh; display:flex; flex-direction:column; justify-content:center; }
+  .hero-bg{ position:absolute; inset:0; overflow:hidden; z-index:-1; pointer-events:none; }
+  .orb{ position:absolute; border-radius:50%; filter:blur(60px); opacity:.35; }
+  .orb1{ width:460px; height:460px; background:var(--red); top:-160px; right:-120px; animation:float1 16s ease-in-out infinite; }
+  .orb2{ width:340px; height:340px; background:#D8C9A3; top:220px; left:-140px; animation:float2 20s ease-in-out infinite; opacity:.3; }
+  @keyframes float1{ 0%,100%{ transform:translate(0,0) scale(1);} 50%{ transform:translate(-40px,50px) scale(1.08);} }
+  @keyframes float2{ 0%,100%{ transform:translate(0,0) scale(1);} 50%{ transform:translate(50px,-30px) scale(1.05);} }
+  @media (prefers-reduced-motion:reduce){ .orb{ animation:none; } }
+
+  .hero-mark{ display:flex; align-items:center; gap:10px; margin-bottom:30px; opacity:0; animation:fadeUp .7s ease forwards; }
+  .hero-mark svg{ width:24px; height:24px; fill:var(--red); }
+  .hero-mark span{ font-family:'Archivo',sans-serif; font-weight:700; font-size:15px; }
+  .word{ display:inline-block; opacity:0; transform:translateY(24px); animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) forwards; }
+  @keyframes fadeUp{ to{ opacity:1; transform:translateY(0); } }
+  .hero-sub{ opacity:0; animation:fadeUp .7s ease forwards; animation-delay:.5s; }
+  .hero-meta{ opacity:0; animation:fadeUp .7s ease forwards; animation-delay:.65s; }
+  .scrollcue{ margin-top:48px; display:flex; align-items:center; gap:8px; color:var(--ink-soft); font-size:12.5px; opacity:0; animation:fadeUp .7s ease forwards; animation-delay:.8s; }
+  .scrollcue svg{ animation:bob 1.8s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(5px);} }
+  @media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } .scrollcue svg{ animation:none; } .word,.hero-sub,.hero-meta,.hero-mark,.scrollcue{ animation:none; opacity:1; } }
+
+  /* ---------- Zigzag rows (Get found/funded/sold/paid) ---------- */
+  .zig{ display:flex; flex-direction:column; margin-top:8px; }
+  .zig-row{ display:flex; align-items:center; gap:clamp(20px,4vw,56px); padding:22px 0; border-bottom:1px solid var(--line); }
+  .zig-row:last-child{ border-bottom:none; }
+  .zig-row:nth-child(even){ flex-direction:row-reverse; text-align:right; }
+  .zig-num{
+    font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(48px,7vw,88px); color:transparent;
+    -webkit-text-stroke:1.5px var(--line); flex-shrink:0; width:clamp(80px,10vw,140px); text-align:center;
+    transition:color .3s ease, -webkit-text-stroke .3s ease;
+  }
+  .zig-row:hover .zig-num{ -webkit-text-stroke:1.5px var(--red); }
+  .zig-text h4{ font-family:'Archivo',sans-serif; font-size:19px; font-weight:700; margin:0 0 6px; }
+  .zig-text p{ margin:0; color:var(--ink-soft); font-size:13.5px; line-height:1.55; max-width:520px; }
+  .zig-row:nth-child(even) .zig-text p{ margin-left:auto; }
+  @media (max-width:700px){
+    .zig-row, .zig-row:nth-child(even){ flex-direction:column; text-align:left; gap:8px; }
+    .zig-row:nth-child(even) .zig-text p{ margin-left:0; }
+    .zig-num{ width:auto; font-size:44px; }
+  }
+
+  /* ---------- Animated process flow ---------- */
+  .flow-track{ position:relative; margin:34px 0 8px; }
+  .flow-line{
+    position:absolute; top:22px; left:22px; right:22px; height:2px; background:var(--line); z-index:0; overflow:hidden; border-radius:2px;
+  }
+  .flow-line::after{
+    content:""; position:absolute; inset:0; width:40%;
+    background:linear-gradient(90deg, transparent, var(--red), transparent);
+    transform:translateX(-100%); opacity:0;
+  }
+  .flow-track.in .flow-line::after{ animation:travel 2.8s ease-in-out .3s infinite; opacity:1; }
+  @keyframes travel{ 0%{ transform:translateX(-100%); } 100%{ transform:translateX(350%); } }
+  .flow-steps{ position:relative; z-index:1; display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+  .flow-item{ flex:1; min-width:150px; text-align:left; }
+  .flow-dot{
+    width:44px; height:44px; border-radius:50%; background:var(--white); border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-family:'Archivo',sans-serif; font-weight:800; font-size:14px;
+    color:var(--ink-soft); margin-bottom:14px; transition:border-color .3s ease, color .3s ease, transform .3s ease, background .3s ease;
+  }
+  .flow-track.in .flow-item:nth-child(1) .flow-dot{ transition-delay:.1s; }
+  .flow-track.in .flow-item:nth-child(2) .flow-dot{ transition-delay:.5s; }
+  .flow-track.in .flow-item:nth-child(3) .flow-dot{ transition-delay:.9s; }
+  .flow-track.in .flow-item:nth-child(4) .flow-dot{ transition-delay:1.3s; }
+  .flow-track.in .flow-item:nth-child(5) .flow-dot{ transition-delay:1.7s; }
+  .flow-track.in .flow-dot{ border-color:var(--red); color:var(--red); background:var(--white); }
+  .flow-item h4{ font-family:'Archivo',sans-serif; font-size:14.5px; font-weight:700; margin:0 0 6px; }
+  .flow-item p{ margin:0; color:var(--ink-soft); font-size:12px; line-height:1.5; max-width:180px; }
+  @media (max-width:900px){
+    .flow-line{ display:none; }
+    .flow-steps{ flex-direction:column; gap:20px; }
+    .flow-item p{ max-width:none; }
+  }
+
+  /* ---------- Tabs ---------- */
+  .tabbar{ display:inline-flex; background:var(--cream-2); border-radius:10px; padding:4px; gap:4px; margin-bottom:22px; flex-wrap:wrap; }
+  .band-dark .tabbar{ background:#2A2620; }
+  .tab-btn{
+    border:none; background:transparent; font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; color:var(--ink-soft);
+    padding:9px 16px; border-radius:7px; cursor:pointer; transition:background .2s ease, color .2s ease;
+  }
+  .tab-btn.active{ background:var(--red); color:#fff; }
+  .tab-btn:not(.active):hover{ color:var(--ink); }
+  .tab-panels{ position:relative; }
+  .tab-panel{ display:none; animation:fadeIn .35s ease; }
+  .tab-panel.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+
+  /* ---------- Segmented toggle (Co-sell) ---------- */
+  .segwrap{ margin-top:6px; }
+  .segbar{ display:inline-flex; background:var(--white); border:1px solid var(--line); border-radius:10px; padding:4px; gap:4px; margin-bottom:20px; }
+  .seg-btn{
+    border:none; background:transparent; font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; color:var(--ink-soft);
+    padding:10px 18px; border-radius:7px; cursor:pointer; transition:background .2s ease, color .2s ease;
+  }
+  .seg-btn.active{ background:var(--ink); color:var(--white); }
+
+  /* ---------- Cards ---------- */
+  .grid2{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .grid4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  @media (max-width:820px){ .grid2,.grid3,.grid4{ grid-template-columns:1fr; } }
+
+  .card{ background:var(--white); border:1px solid var(--line); border-radius:12px; padding:20px 22px; transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .card:hover{ transform:translateY(-3px); box-shadow:0 10px 28px rgba(28,26,22,.08); border-color:#C9BFA6; }
+  .card.tint{ background:var(--cream-2); }
+  .band-dark .card{ background:#2A2620; border-color:#3A352A; }
+  .band-dark .card:hover{ box-shadow:0 10px 28px rgba(0,0,0,.35); border-color:#4A4436; }
+  .card h4{ font-family:'Archivo',sans-serif; font-weight:700; font-size:16px; margin:0 0 6px; }
+  .card .tag{ color:var(--red); font-weight:600; font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; margin:0 0 10px; }
+  .card p.desc{ margin:0; color:var(--ink-soft); font-size:12.5px; line-height:1.5; }
+  .band-dark .card p.desc{ color:#D8D2C4; }
+  .band-dark .card h4{ color:var(--red); }
+
+  .num{
+    width:28px; height:28px; border-radius:7px; background:var(--red); color:#fff; font-weight:700; font-size:12.5px;
+    display:flex; align-items:center; justify-content:center; margin-bottom:12px; flex-shrink:0;
+  }
+  ul.plain{ margin:0; padding:0; list-style:none; }
+  ul.plain li{ color:var(--ink-soft); font-size:13px; line-height:1.6; padding-left:17px; position:relative; margin-bottom:10px; }
+  ul.plain li::before{ content:"→"; position:absolute; left:0; top:0; color:var(--red); font-weight:700; font-size:12px; }
+  .band-dark ul.plain li{ color:#D8D2C4; }
+
+  /* ---------- Custom animated accordion ---------- */
+  .acc{ background:var(--white); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .band-dark .acc{ background:#2A2620; border-color:#3A352A; }
+  .acc-item + .acc-item{ border-top:1px solid var(--line); }
+  .band-dark .acc-item + .acc-item{ border-color:#3A352A; }
+  .acc-head{
+    width:100%; text-align:left; background:none; border:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between;
+    gap:14px; padding:16px 20px; font-family:'Inter',sans-serif; font-weight:700; font-size:13.5px; color:var(--ink);
+  }
+  .band-dark .acc-head{ color:var(--white); }
+  .acc-head .chev{ flex-shrink:0; color:var(--ink-soft); transition:transform .3s ease; }
+  .acc-item.open .acc-head .chev{ transform:rotate(180deg); color:var(--red); }
+  .acc-panel{ max-height:0; overflow:hidden; transition:max-height .38s cubic-bezier(.2,.7,.2,1); }
+  .acc-panel-inner{ padding:0 20px 18px; color:var(--ink-soft); font-size:12.5px; line-height:1.6; }
+  .band-dark .acc-panel-inner{ color:#D8D2C4; }
+
+  /* grid of accordion cards (specializations) */
+  .acc-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  @media (max-width:820px){ .acc-grid{ grid-template-columns:1fr; } }
+  .acc-card{ background:var(--white); border:1px solid var(--line); border-radius:12px; overflow:hidden; transition:box-shadow .25s ease, transform .25s ease; }
+  .acc-card:hover{ transform:translateY(-2px); }
+  .acc-card .acc-head{ align-items:flex-start; padding:18px 18px; }
+  .acc-card .acc-head-left{ display:flex; flex-direction:column; }
+  .acc-card h4{ font-family:'Archivo',sans-serif; font-size:14px; font-weight:700; margin:8px 0 0; }
+
+  /* ---------- Pills ---------- */
+  .pillrow{ display:flex; flex-wrap:wrap; gap:8px; margin:20px 0; }
+  .pillbadge{
+    background:var(--white); border:1px solid var(--line); border-radius:999px; padding:9px 16px; font-size:12px; font-weight:600;
+    cursor:pointer; transition:background .2s ease, color .2s ease, border-color .2s ease, transform .15s ease;
+  }
+  .pillbadge:hover{ transform:translateY(-2px); }
+  .pillbadge.active{ background:var(--red); color:#fff; border-color:var(--red); }
+  .band-dark .pillbadge{ background:#2A2620; border-color:#3A352A; }
+
+  /* ---------- Callout ---------- */
+  .callout{
+    position:relative; background:var(--red); color:#fff; border-radius:12px; padding:20px 26px;
+    font-family:'Archivo',sans-serif; font-weight:700; font-size:clamp(14px,1.7vw,17px); margin-top:22px; line-height:1.4;
+    overflow:hidden;
+  }
+  .callout::before{
+    content:""; position:absolute; inset:0; background:linear-gradient(120deg, rgba(255,255,255,.12), transparent 40%);
+  }
+
+  /* ---------- Stat counters (MACC) ---------- */
+  .statrow{ display:flex; gap:clamp(24px,4vw,56px); flex-wrap:wrap; margin:26px 0 8px; }
+  .stat{ min-width:120px; }
+  .stat .val{ font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(34px,4.4vw,52px); color:var(--red); line-height:1; }
+  .stat .lbl{ font-size:11.5px; color:var(--ink-soft); font-weight:600; margin-top:6px; text-transform:uppercase; letter-spacing:.04em; }
+
+  /* ---------- Roadmap timeline ---------- */
+  .timeline{ position:relative; margin-top:36px; }
+  .tl-track{ position:relative; display:flex; justify-content:space-between; margin-bottom:8px; }
+  .tl-line{ position:absolute; top:18px; left:18px; right:18px; height:2px; background:var(--line); z-index:0; }
+  .tl-line-fill{ position:absolute; top:0; left:0; height:100%; width:8%; background:var(--red); transition:width .6s cubic-bezier(.2,.7,.2,1); }
+  .tl-stop{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:10px; cursor:pointer; background:none; border:none; font-family:inherit; flex:1; }
+  .tl-dot{
+    width:36px; height:36px; border-radius:50%; background:var(--white); border:2px solid var(--line); display:flex; align-items:center;
+    justify-content:center; font-family:'Archivo',sans-serif; font-weight:800; font-size:12px; color:var(--ink-soft);
+    transition:border-color .25s ease, color .25s ease, background .25s ease, box-shadow .25s ease;
+  }
+  .tl-stop.active .tl-dot{ border-color:var(--red); color:#fff; background:var(--red); box-shadow:0 0 0 6px var(--red-glow); }
+  .tl-stop.current .tl-dot{ animation:pulseDot 2s ease-in-out infinite; }
+  @keyframes pulseDot{ 0%,100%{ box-shadow:0 0 0 0 var(--red-glow);} 50%{ box-shadow:0 0 0 10px transparent;} }
+  .tl-label{ font-size:11.5px; font-weight:700; color:var(--ink-soft); text-align:center; }
+  .tl-stop.active .tl-label{ color:var(--ink); }
+  .tl-sub{ font-size:10px; color:var(--ink-soft); text-align:center; }
+
+  .tl-panel{ background:var(--white); border:1px solid var(--line); border-radius:12px; padding:24px 26px; margin-top:30px; }
+  .tl-panel .tag-cur{ display:inline-block; background:var(--red); color:#fff; font-size:9.5px; font-weight:700; letter-spacing:.06em; padding:4px 10px; border-radius:5px; margin-bottom:10px; }
+  .tl-panel h4{ font-family:'Archivo',sans-serif; font-size:18px; font-weight:700; margin:0 0 12px; }
+
+  /* ---------- Owners list ---------- */
+  .ownerlist{ display:flex; flex-direction:column; gap:2px; margin-top:10px; }
+  .owner-row{
+    display:grid; grid-template-columns:1fr 1.6fr .9fr; gap:16px; align-items:center; padding:14px 18px; border-radius:9px;
+    transition:background .2s ease;
+  }
+  .owner-row:hover{ background:var(--white); }
+  .owner-row .oname{ font-weight:700; font-size:13px; display:flex; align-items:center; gap:10px; }
+  .owner-row .odot{ width:8px; height:8px; border-radius:50%; background:var(--red); flex-shrink:0; }
+  .owner-row .otask{ font-size:12.5px; color:var(--ink-soft); }
+  .owner-row .ocad{ font-size:11.5px; color:var(--ink-soft); font-weight:600; text-align:right; }
+  .owner-head{ display:grid; grid-template-columns:1fr 1.6fr .9fr; gap:16px; padding:0 18px 10px; font-size:10.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+  .owner-head .ocad{ text-align:right; }
+  @media (max-width:700px){
+    .owner-row, .owner-head{ grid-template-columns:1fr; gap:4px; text-align:left; }
+    .owner-row .ocad, .owner-head .ocad{ text-align:left; }
+    .owner-head{ display:none; }
+    .owner-row{ border-bottom:1px solid var(--line); border-radius:0; }
+  }
+
+  /* ---------- Glossary ---------- */
+  .glossary{ display:grid; grid-template-columns:1fr 1fr; gap:6px 28px; margin-top:8px; }
+  @media (max-width:760px){ .glossary{ grid-template-columns:1fr; } }
+  .gterm{ display:flex; align-items:baseline; gap:8px; font-size:13px; padding:9px 0; border-bottom:1px solid var(--line); transition:padding-left .2s ease; }
+  .gterm:hover{ padding-left:6px; }
+  .gterm b{ color:var(--red); flex-shrink:0; }
+  .gterm span{ color:var(--ink-soft); }
+
+  .linklist{ display:flex; flex-direction:column; gap:2px; margin-top:8px; }
+  .linkrow{
+    display:flex; align-items:center; gap:10px; padding:12px 4px; font-size:13px; color:var(--ink-soft);
+    border-bottom:1px solid var(--line); transition:color .2s ease, padding-left .2s ease;
+  }
+  .linkrow:hover{ color:var(--red); padding-left:8px; }
+  .linkrow svg{ flex-shrink:0; width:14px; height:14px; opacity:.6; }
+
+  footer{ text-align:center; font-size:11.5px; color:var(--ink-soft); padding:36px 20px 48px; border-top:1px solid var(--line); }
+
+  #toTop{
+    position:fixed; right:20px; bottom:20px; width:42px; height:42px; border-radius:50%;
+    background:var(--white); border:1px solid var(--line); color:var(--ink);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    opacity:0; pointer-events:none; transform:translateY(8px) scale(.9);
+    transition:opacity .2s ease, transform .2s ease, border-color .15s ease, box-shadow .2s ease; z-index:60;
+  }
+  #toTop.show{ opacity:1; pointer-events:auto; transform:translateY(0) scale(1); }
+  #toTop:hover{ border-color:var(--red); color:var(--red); box-shadow:0 6px 18px rgba(28,26,22,.12); }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header>
+  <div class="navwrap">
+    <div class="brand">
+      <svg viewBox="0 0 512 512"><path d="M139.7 23.52c-9.1 30.54-16.5 61.64-12.7 91.58 4.2 32.7 21 64.9 65.7 95.7-53.6 74.8-86.1 204.4-59.3 277.7 10.9-54 14.2-97.8 53.5-144.6 77.5-25.6 123.9-37.6 140.3-125.7 6.2-14.7 12.6-19.3 31.9-24.7 10.6-2.9 22.2-7.5 22.1-19.2-.2-49.3-28.3-68.4-57.6-67.9-29.4.5-60 20.6-65.4 49.8-6 1.8-11.9 4.5-17.7 8-62.9-43.7-82.1-85.86-100.8-140.68zM32.03 107c10.8 27.2 26.44 54.6 49.2 76.1 24.27 22.9 56.47 39.3 100.87 42.2-34.5-24.2-54.8-50.3-65.2-77.2-29.4-10.9-56.47-25-84.87-41.1zm300.07 26.3a12.24 12.24 0 0 1 12.2 12.2 12.24 12.24 0 0 1-12.2 12.2 12.24 12.24 0 0 1-12.2-12.2 12.24 12.24 0 0 1 12.2-12.2zm60 56.1c-3.5 5.1-7.1 10.2-16.1 13.2 33.9 25.3 79.1 76.5 104 105-11.2-33.2-55.8-88.6-87.9-118.2z"/></svg>
+      <span>FY27 Partner Playbook</span>
+    </div>
+    <nav class="links" id="navLinks">
+      <a href="#overview" data-sec="overview">Overview</a>
+      <a href="#foundation" data-sec="foundation">Foundation</a>
+      <a href="#credentials" data-sec="credentials">Credentials</a>
+      <a href="#frontier" data-sec="frontier">Frontier</a>
+      <a href="#scalefast" data-sec="scalefast">ScaleFast</a>
+      <a href="#gtm" data-sec="gtm">Go-to-Market</a>
+      <a href="#roadmap" data-sec="roadmap">Roadmap</a>
+      <a href="#resources" data-sec="resources">Resources</a>
+      <span class="nav-indicator" id="navIndicator"></span>
+    </nav>
+    <div class="navRight">
+      <select class="jump" id="jump" aria-label="Jump to section">
+        <option value="hero">Cover</option>
+        <option value="overview">Overview</option>
+        <option value="foundation">Foundation</option>
+        <option value="credentials">Credentials</option>
+        <option value="frontier">Frontier</option>
+        <option value="scalefast">ScaleFast</option>
+        <option value="gtm">Go-to-Market</option>
+        <option value="roadmap">Roadmap</option>
+        <option value="resources">Resources</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"><div class="orb orb1"></div><div class="orb orb2"></div></div>
+  <div class="hero-mark">
+    <svg viewBox="0 0 512 512"><path d="M139.7 23.52c-9.1 30.54-16.5 61.64-12.7 91.58 4.2 32.7 21 64.9 65.7 95.7-53.6 74.8-86.1 204.4-59.3 277.7 10.9-54 14.2-97.8 53.5-144.6 77.5-25.6 123.9-37.6 140.3-125.7 6.2-14.7 12.6-19.3 31.9-24.7 10.6-2.9 22.2-7.5 22.1-19.2-.2-49.3-28.3-68.4-57.6-67.9-29.4.5-60 20.6-65.4 49.8-6 1.8-11.9 4.5-17.7 8-62.9-43.7-82.1-85.86-100.8-140.68zM32.03 107c10.8 27.2 26.44 54.6 49.2 76.1 24.27 22.9 56.47 39.3 100.87 42.2-34.5-24.2-54.8-50.3-65.2-77.2-29.4-10.9-56.47-25-84.87-41.1zm300.07 26.3a12.24 12.24 0 0 1 12.2 12.2 12.24 12.24 0 0 1-12.2 12.2 12.24 12.24 0 0 1-12.2-12.2 12.24 12.24 0 0 1 12.2-12.2zm60 56.1c-3.5 5.1-7.1 10.2-16.1 13.2 33.9 25.3 79.1 76.5 104 105-11.2-33.2-55.8-88.6-87.9-118.2z"/></svg>
+    <span>Hummingbird</span>
+  </div>
+  <div class="eyebrow" style="opacity:0; animation:fadeUp .6s ease forwards; animation-delay:.15s;">Go-to-market plan · Confidential</div>
+  <h1 class="display" id="heroTitle" style="font-size:clamp(34px,6vw,66px);"></h1>
+  <p class="sub hero-sub" style="font-size:clamp(15px,1.8vw,20px); max-width:760px;">Designations, Co-sell, CPOR, PAL, MACC, ScaleFast ERP &amp; the Frontier Partner Specialization</p>
+  <div class="meta hero-meta">FY27 · July 2026 – June 2027</div>
+  <div class="scrollcue">
+    <span>Scroll</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="eyebrow reveal">The FY27 landscape</div>
+  <h2 class="display reveal">One playbook. Every Microsoft lever.</h2>
+  <p class="sub reveal">Microsoft's fiscal year 2027 began July 1, 2026. Microsoft rebuilt its partner economics around one framework — Frontier Accelerate — built on Trusted Expertise, Savings &amp; Investments, and Skilled Teams. This playbook is how Hummingbird operationalizes it.</p>
+
+  <div class="zig reveal-group">
+    <div class="zig-row reveal" style="--i:0"><div class="zig-num">1</div><div class="zig-text"><h4>Get found</h4><p>Designations &amp; Specializations — earn the credentials that make Microsoft and customers find us.</p></div></div>
+    <div class="zig-row reveal" style="--i:1"><div class="zig-num">2</div><div class="zig-text"><h4>Get funded</h4><p>CPOR, PAL &amp; incentive attribution — make sure every engagement is visible to Microsoft.</p></div></div>
+    <div class="zig-row reveal" style="--i:2"><div class="zig-num">3</div><div class="zig-text"><h4>Get sold</h4><p>Co-sell, Marketplace &amp; ScaleFast ERP — get Hummingbird into Microsoft seller motions and buyer search.</p></div></div>
+    <div class="zig-row reveal" style="--i:3"><div class="zig-num">4</div><div class="zig-text"><h4>Get paid</h4><p>MACC &amp; consumption — turn our solutions into spend customers can apply against committed budget.</p></div></div>
+  </div>
+
+  <h3 class="blocktitle reveal" style="margin-top:52px;">Attribution feeds everything</h3>
+  <p class="sub reveal">Skip step one and every later step stalls — Microsoft can't reward what it can't see.</p>
+  <div class="flow-track reveal" id="flowTrack1">
+    <div class="flow-line"></div>
+    <div class="flow-steps">
+      <div class="flow-item"><div class="flow-dot">01</div><h4>Tag attribution</h4><p>PAL + CPOR on every engagement, from kickoff.</p></div>
+      <div class="flow-item"><div class="flow-dot">02</div><h4>Earn standing</h4><p>Solutions Partner designations &amp; specializations.</p></div>
+      <div class="flow-item"><div class="flow-dot">03</div><h4>Get eligible</h4><p>Co-sell ready, then Azure IP co-sell eligible.</p></div>
+      <div class="flow-item"><div class="flow-dot">04</div><h4>List &amp; transact</h4><p>Transactable Marketplace offer, MACC-enrolled.</p></div>
+      <div class="flow-item"><div class="flow-dot">05</div><h4>Get paid &amp; seen</h4><p>Incentives, seller quota credit, Frontier eligibility.</p></div>
+    </div>
+  </div>
+  <div class="callout reveal">One system, five moves — the difference by pillar is the audience, not the effort.</div>
+</section>
+
+<!-- FOUNDATION -->
+<section id="foundation" class="band band-tint">
+  <div class="inner">
+    <div class="eyebrow reveal">Foundation</div>
+    <h2 class="display reveal">Nothing pays until Microsoft can see the work.</h2>
+
+    <div class="tabbar reveal" role="tablist">
+      <button class="tab-btn active" data-tab="pal">PAL</button>
+      <button class="tab-btn" data-tab="cpor">CPOR</button>
+      <button class="tab-btn" data-tab="dpor">DPOR</button>
+    </div>
+    <div class="tab-panels reveal">
+      <div class="tab-panel active" data-panel="pal">
+        <h3 class="blocktitle">PAL — Partner Admin Link</h3>
+        <ul class="plain">
+          <li>Links our MPN ID to the customer's Azure credentials for automatic consumption tracking</li>
+          <li>Partner-initiated — set it up ourselves, no customer action required</li>
+          <li>Multiple partners can hold PAL on the same subscription</li>
+        </ul>
+      </div>
+      <div class="tab-panel" data-panel="cpor">
+        <h3 class="blocktitle">CPOR — Customer Partner of Record</h3>
+        <ul class="plain">
+          <li>Claims credit for services delivered across Microsoft 365, Dynamics 365, Power Platform and Azure — not just consumption</li>
+          <li>Must be claimed within 120 days of the transactional date</li>
+          <li>Feeds Solutions Partner performance &amp; customer-success scoring</li>
+        </ul>
+      </div>
+      <div class="tab-panel" data-panel="dpor">
+        <h3 class="blocktitle">DPOR — Digital Partner of Record (legacy)</h3>
+        <ul class="plain">
+          <li>One partner per subscription, tied to Enterprise Agreements</li>
+          <li>Customer must initiate the association, not the partner</li>
+          <li>Doesn't survive an EA → MCA migration — PAL is the modern replacement</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout reveal">FY27 rule: PAL on every Azure engagement, CPOR on every services engagement — Day 1, not Month 6.</div>
+
+    <div class="grid2" style="margin-top:52px;">
+      <div class="reveal">
+        <h3 class="blocktitle">PAL Tagging Playbook</h3>
+        <p class="sub" style="font-size:13px;">Associates our MPN ID with the customer's Azure subscription so Microsoft attributes consumption to us automatically — even when we didn't sell the licensing.</p>
+        <div class="acc" data-accordion>
+          <div class="acc-item open">
+            <button class="acc-head"><span>Why it matters</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Gates usage-based incentive eligibility, feeds Solutions Partner performance points (Data &amp; AI, Infrastructure, Digital &amp; App Innovation), and is required for specializations that depend on deployed workloads.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head"><span>Process</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-panel"><div class="acc-panel-inner">1. Confirm the MPN ID is active in Partner Center. 2. At kickoff, request Owner/Contributor access on the customer's subscription. 3. Link PAL via the Azure portal before first deployment activity. 4. Verify the link shows in Partner Center within 7 days.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head"><span>Owner &amp; cadence</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Delivery Lead — standing item on every project kickoff checklist.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <h3 class="blocktitle">CPOR Playbook</h3>
+        <p class="sub" style="font-size:13px;">The formal Microsoft record that Hummingbird is the partner driving a customer's success on a given workload — across Microsoft 365, Dynamics 365, Power Platform and Azure.</p>
+        <div class="acc" data-accordion>
+          <div class="acc-item open">
+            <button class="acc-head"><span>Why it matters</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Feeds Solutions Partner performance &amp; customer-success scoring, unlocks incentive eligibility tied to workload-level delivery (not just licensing sold), and gives Microsoft visibility to match us into co-sell opportunities.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head"><span>Process</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-panel"><div class="acc-panel-inner">1. Identify the workload and Microsoft product family at project start. 2. Submit the CPOR claim in Partner Center within 120 days of the transactional date. 3. Track claim status; resolve rejections within the same billing cycle. 4. Re-validate CPOR at renewal or expansion.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head"><span>Owner &amp; cadence</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Partner Operations — claim within 5 business days of contract signature.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section id="credentials">
+  <div class="eyebrow reveal">Standing · Credentials</div>
+  <h2 class="display reveal">Solutions Partner Designations &amp; Specializations</h2>
+  <p class="sub reveal">Six solution areas, each scored 0–100 by the Partner Capability Score (PCS). 70+ points earns the designation. Specializations layer on top — no extra purchase, just deeper proof.</p>
+
+  <div class="pillrow reveal" id="pillRow">
+    <button class="pillbadge active" data-area="Data & AI (Azure)">Data &amp; AI (Azure)</button>
+    <button class="pillbadge active" data-area="Digital & App Innovation (Azure)">Digital &amp; App Innovation (Azure)</button>
+    <button class="pillbadge" data-area="Infrastructure (Azure)">Infrastructure (Azure)</button>
+    <button class="pillbadge active" data-area="Business Applications">Business Applications</button>
+    <button class="pillbadge" data-area="Modern Work">Modern Work</button>
+    <button class="pillbadge" data-area="Security">Security</button>
+  </div>
+  <p class="sub" id="pillNote" style="font-size:12.5px;">Highlighted areas are Hummingbird's active FY27 solution areas — mapped to our four delivery capabilities.</p>
+
+  <div class="grid3 reveal-group" style="margin-top:18px;">
+    <div class="card tint reveal" style="--i:0"><h4 style="font-size:14px;">Performance</h4><p class="desc">Net customer adds &amp; consumption</p></div>
+    <div class="card tint reveal" style="--i:1"><h4 style="font-size:14px;">Skilling</h4><p class="desc">Certified individuals on the team</p></div>
+    <div class="card tint reveal" style="--i:2"><h4 style="font-size:14px;">Customer Success</h4><p class="desc">Specializations delivered, usage growth</p></div>
+  </div>
+
+  <h3 class="blocktitle reveal" style="margin-top:48px;">Specializations — our FY27 targets</h3>
+  <div class="acc-grid reveal-group">
+    <div class="acc-card reveal" style="--i:0" data-accordion>
+      <div class="acc-item">
+        <button class="acc-head"><div class="acc-head-left"><div class="num">1</div><h4>Microsoft 365 Copilot</h4></div><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="acc-panel"><div class="acc-panel-inner">Proven Copilot deployment and adoption capability.</div></div>
+      </div>
+    </div>
+    <div class="acc-card reveal" style="--i:1" data-accordion>
+      <div class="acc-item">
+        <button class="acc-head"><div class="acc-head-left"><div class="num">2</div><h4>AI Apps / Platform on Azure</h4></div><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="acc-panel"><div class="acc-panel-inner">Depth building and operating AI workloads on Azure.</div></div>
+      </div>
+    </div>
+    <div class="acc-card reveal" style="--i:2" data-accordion>
+      <div class="acc-item">
+        <button class="acc-head"><div class="acc-head-left"><div class="num">3</div><h4>Data Security</h4></div><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="acc-panel"><div class="acc-panel-inner">Protecting and governing data across the Microsoft stack.</div></div>
+      </div>
+    </div>
+    <div class="acc-card reveal" style="--i:3" data-accordion>
+      <div class="acc-item">
+        <button class="acc-head"><div class="acc-head-left"><div class="num">4</div><h4>Identity &amp; Access Mgmt</h4></div><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="acc-panel"><div class="acc-panel-inner">Securing identity across agents, apps and users.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="callout reveal">These four are also the prerequisites for the new Frontier Partner Specialization — build them once, unlock two things.</div>
+</section>
+
+<!-- FRONTIER SPOTLIGHT -->
+<section id="frontier" class="band band-dark">
+  <div class="hero-bg"><div class="orb orb1" style="opacity:.22; top:-100px;"></div></div>
+  <div class="inner">
+    <div class="eyebrow reveal">FY27 focus · Spotlight</div>
+    <h2 class="display reveal">Frontier Accelerate</h2>
+    <p class="sub reveal">Microsoft's unified FY27 customer value framework for AI transformation</p>
+    <div class="grid3 reveal-group" style="margin-top:22px;">
+      <div class="card reveal" style="--i:0"><h4>Trusted Expertise</h4><p class="desc">Guidance, resources and co-sell support to move from AI strategy to secure deployment.</p></div>
+      <div class="card reveal" style="--i:1"><h4>Savings &amp; Investments</h4><p class="desc">Funding and incentives that lower the cost of engagement and improve partner margin.</p></div>
+      <div class="card reveal" style="--i:2"><h4>Skilled Teams</h4><p class="desc">Skilling and enablement that prepares teams to guide customers through AI.</p></div>
+    </div>
+    <h3 class="blocktitle reveal" style="margin-top:36px; color:var(--white);">Rolling out through FY27</h3>
+    <ul class="plain reveal">
+      <li>Frontier Accelerate for Azure</li>
+      <li>Frontier Accelerate for Marketplace — launches Sept 2026, unifies ISV Success, Marketplace Rewards, Azure IP Co-sell &amp; Certified Software Designations</li>
+      <li>Frontier Accelerate for Security</li>
+      <li>Frontier Accelerate for Business Processes</li>
+    </ul>
+    <div class="callout reveal">This is the lens Hummingbird sells through in FY27 — one customer value story, not four separate program names.</div>
+
+    <h3 class="blocktitle reveal" style="margin-top:52px; color:var(--white);">The Frontier Partner Specialization</h3>
+    <p class="sub reveal">Replaces the Frontier Partner Badge (retiring end of June 2027). Validates the ability to design, build, deploy, govern and secure AI agents across the full Microsoft stack — M365 Copilot, Azure AI Foundry, GitHub Copilot, Defender, Entra and Purview.</p>
+
+    <div class="segwrap reveal">
+      <div class="segbar" role="tablist">
+        <button class="seg-btn active" data-seg="req">Requirements</button>
+        <button class="seg-btn" data-seg="unlock">What it unlocks</button>
+      </div>
+      <div class="tab-panels">
+        <div class="tab-panel active" data-segpanel="req">
+          <ul class="plain">
+            <li>4 prerequisite specializations: M365 Copilot, AI Apps or AI Platform on Azure, Data Security, Identity &amp; Access Management</li>
+            <li>Skilling: 5 people hold the Frontier Transformation Engineer badge; 3 hold Fabric Analytics Engineer Associate (DP-600)</li>
+            <li>Third-party audit across design → build → deploy → govern → secure → operate; 2-year audit cadence</li>
+            <li>Opens for enrollment later in FY27 — start preparing now</li>
+          </ul>
+        </div>
+        <div class="tab-panel" data-segpanel="unlock">
+          <ul class="plain">
+            <li>Eligibility for Frontier-aligned co-sell opportunities</li>
+            <li>Microsoft Agent prepurchase plan credits + Microsoft 365 E7 licensing</li>
+            <li>Packaged go-to-market resources: campaigns &amp; case study opportunities</li>
+            <li>MAICPP Concierge support through the qualification process</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="callout reveal">Badge holders keep using the badge through FY27 — after June 2027, only the specialization counts. Hummingbird's target: earn it before the badge sunsets.</div>
+  </div>
+</section>
+
+<!-- SCALEFAST -->
+<section id="scalefast">
+  <div class="eyebrow reveal">FY27 focus · ScaleFast ERP</div>
+  <h2 class="display reveal">ScaleFast: sell fast, win fast, deploy fast.</h2>
+  <p class="sub reveal">A Microsoft AI Business Solutions program that pairs Microsoft sellers with partners who bring packaged, agentic industry solutions on Dynamics 365 — typically closing and deploying in half the time of an unpackaged engagement.</p>
+
+  <div class="statrow reveal-group" id="sfStats">
+    <div class="stat reveal" style="--i:0"><div class="val" data-count="50" data-suffix="%">0%</div><div class="lbl">Typical time vs. an unpackaged win-and-deploy cycle</div></div>
+    <div class="stat reveal" style="--i:1"><div class="val" data-count="10" data-prefix="$" data-suffix="K">$0K</div><div class="lbl">Neural Impact coaching fee, after a Go decision</div></div>
+    <div class="stat reveal" style="--i:2"><div class="val" data-count="4" data-suffix=" workshops">0 workshops</div><div class="lbl">Over 4 weeks to build the ScaleFast BOM</div></div>
+  </div>
+
+  <div class="tabbar reveal" role="tablist" style="margin-top:30px;">
+    <button class="tab-btn active" data-tab="sf-seller">Sellers</button>
+    <button class="tab-btn" data-tab="sf-customer">Customers</button>
+    <button class="tab-btn" data-tab="sf-partner">Hummingbird</button>
+  </div>
+  <div class="tab-panels reveal">
+    <div class="tab-panel active" data-panel="sf-seller"><ul class="plain">
+      <li>Scale with a partner-led sales process</li>
+      <li>Find the right partner with the ScaleFast Agent</li>
+      <li>Engage customers with one simple, consistent BOM</li>
+      <li>Accelerate pipeline and retire quota faster</li></ul></div>
+    <div class="tab-panel" data-panel="sf-customer"><ul class="plain">
+      <li>A credible partner with a Business Applications designation, specializations and FastTrack Portfolio</li>
+      <li>Industry experience in a box</li>
+      <li>Reduced risk and deployment time; ROI sooner</li></ul></div>
+    <div class="tab-panel" data-panel="sf-partner"><ul class="plain">
+      <li>Co-sell with Microsoft sellers</li>
+      <li>Differentiation and competitive advantage</li>
+      <li>Win more deals, faster; build recurring revenue</li>
+      <li>Coaching and BOM support from Neural Impact</li></ul></div>
+  </div>
+  <div class="callout reveal">Built on Dynamics 365 CRM or ERP (not Business Central) for the Enterprise segment — a direct fit for our ERP modernization and Salesforce-switcher wins.</div>
+
+  <h3 class="blocktitle reveal" style="margin-top:52px;">Onboarding: about three months to Go</h3>
+  <p class="sub reveal">Three phases, each gated by Microsoft approval. The Nomination Form is where it starts — which is why it is our first move.</p>
+  <div class="flow-track reveal" id="flowTrack3">
+    <div class="flow-line"></div>
+    <div class="flow-steps">
+      <div class="flow-item"><div class="flow-dot">01</div><h4>Nominate</h4><p>Return the Nomination Form and arrange a call.</p></div>
+      <div class="flow-item"><div class="flow-dot">02</div><h4>Evaluate</h4><p>Meet Microsoft; Go or No-go decision.</p></div>
+      <div class="flow-item"><div class="flow-dot">03</div><h4>Get set</h4><p>Pay Neural Impact $10K; complete the CACA survey.</p></div>
+      <div class="flow-item"><div class="flow-dot">04</div><h4>Coach &amp; build</h4><p>4 workshops over 4 weeks; build the BOM.</p></div>
+      <div class="flow-item"><div class="flow-dot">05</div><h4>Go!</h4><p>Final review, seller briefings, engage accounts.</p></div>
+    </div>
+  </div>
+
+  <h3 class="blocktitle reveal" style="margin-top:52px;">The pit checklist: what we need in hand</h3>
+  <div class="tabbar reveal" role="tablist">
+    <button class="tab-btn active" data-tab="sf-ready">1. Get Ready</button>
+    <button class="tab-btn" data-tab="sf-set">2. Get Set</button>
+    <button class="tab-btn" data-tab="sf-go">3. Go!</button>
+  </div>
+  <div class="tab-panels reveal">
+    <div class="tab-panel active" data-panel="sf-ready"><ul class="plain">
+      <li>Packaged solution with agentic capability, documented success, targeting the Enterprise segment</li>
+      <li>Commitment to execute the ScaleFast GTM</li>
+      <li>Solution Partner designation for Business Applications</li>
+      <li>1+ MAICPP specialization aligned to the solution IP</li>
+      <li>FastTrack Portfolio attainment and execution</li>
+      <li>Nomination Form submitted and approved</li></ul></div>
+    <div class="tab-panel" data-panel="sf-set"><ul class="plain">
+      <li>Neural Impact coaching payment: $10K</li>
+      <li>ScaleFast BOM built and approved: deck, battlecard, email</li>
+      <li>Partner website page describing the packaged solution</li>
+      <li>Marketplace listing describing the packaged solution</li>
+      <li>Customer case study on our website (minimum 1)</li></ul></div>
+    <div class="tab-panel" data-panel="sf-go"><ul class="plain">
+      <li>Share deals with sellers: tag them in Partner Center</li>
+      <li>Action deals that sellers send us: engage the customer</li>
+      <li>Co-sell with sellers through account planning</li></ul></div>
+  </div>
+  <div class="callout reveal">Gap check before we nominate: confirm the Business Applications designation, an aligned specialization, FastTrack Portfolio, an agentic packaged solution, and one published case study.</div>
+
+  <h3 class="blocktitle reveal" style="margin-top:52px;">Execution: two ways in, one BOM</h3>
+  <div class="segwrap reveal">
+    <div class="segbar" role="tablist">
+      <button class="seg-btn active" data-seg="field">Field-led</button>
+      <button class="seg-btn" data-seg="partner">Partner-led</button>
+      <button class="seg-btn" data-seg="bom">The BOM</button>
+    </div>
+    <div class="tab-panels">
+      <div class="tab-panel active" data-segpanel="field"><ul class="plain">
+        <li>Sellers use the ScaleFast Agent to match an account to the best-fit partner</li>
+        <li>The seller qualifies the account, or shares it as a lead for the partner to qualify</li>
+        <li>Referrals arrive tagged “AIBP | ScaleFast”: accept and engage</li>
+        <li>Microsoft's target list stays with sellers, not partners</li></ul></div>
+      <div class="tab-panel" data-segpanel="partner"><ul class="plain">
+        <li>Qualify the account ourselves</li>
+        <li>Register and share the opportunity in Partner Center</li>
+        <li>Enter “AIBP | ScaleFast” in the Marketing Campaign ID field</li>
+        <li>Lead the co-sell with existing programs</li></ul></div>
+      <div class="tab-panel" data-segpanel="bom"><ul class="plain">
+        <li><b>Email:</b> short solution description, link to our solution page, offer, next steps</li>
+        <li><b>Pitch deck:</b> 10–15 slide L100 story built on industry and persona challenges and business outcomes</li>
+        <li><b>Battlecard:</b> qualifying questions, objection handling, competitive answers; it powers the ScaleFast Agent</li></ul></div>
+    </div>
+  </div>
+  <div class="kicker-pills" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; align-items:center;">
+    <span class="sub" style="margin:0 6px 0 0; font-size:13px; font-weight:600; color:var(--ink);">Stack with existing programs:</span>
+    <span class="pillbadge active" style="cursor:default;">MCI: CSP Deployment Accelerator</span><span class="pillbadge active" style="cursor:default;">ERP Accelerate</span><span class="pillbadge active" style="cursor:default;">FastTrack</span>
+  </div>
+  <div class="callout reveal">The seller-side tools (ScaleFast Agent, Teams site, BOM library) are Microsoft-internal — our BOM is what feeds them.</div>
+</section>
+
+<!-- GO-TO-MARKET -->
+<section id="gtm">
+  <div class="eyebrow reveal">Standing · Route to market</div>
+  <h2 class="display reveal">Co-sell, Marketplace &amp; MACC</h2>
+
+  <h3 class="blocktitle reveal" style="margin-top:14px;">Co-sell: getting Microsoft sellers to sell with us</h3>
+  <div class="segwrap reveal">
+    <div class="segbar" role="tablist">
+      <button class="seg-btn active" data-seg="ready">Co-sell ready</button>
+      <button class="seg-btn" data-seg="ipeligible">Azure IP co-sell eligible</button>
+    </div>
+    <div class="tab-panels">
+      <div class="tab-panel active" data-segpanel="ready">
+        <p class="sub" style="font-size:12px; margin-bottom:10px;">Baseline tier</p>
+        <ul class="plain">
+          <li>Visible to Microsoft sellers once a solution or practice is published with core information</li>
+          <li>The entry point — no revenue threshold to clear</li>
+        </ul>
+      </div>
+      <div class="tab-panel" data-segpanel="ipeligible">
+        <p class="sub" style="font-size:12px; margin-bottom:10px;">Higher tier</p>
+        <ul class="plain">
+          <li>Requires $100K Azure Consumed Revenue (trailing 12 months), technical validation, and a transactable Marketplace offer</li>
+          <li>Unlocks MACC eligibility, Microsoft seller quota credit, and premium Marketplace Rewards</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="callout reveal">Co-sell and Marketplace are one flywheel in FY27 — Frontier Accelerate for Marketplace formally unifies them starting September 2026.</div>
+
+  <h3 class="blocktitle reveal" style="margin-top:52px;">From Nectar Works IP to customer spend</h3>
+  <p class="sub reveal">Turns a services offer or accelerator into a transactable product Microsoft can sell alongside us — and count toward a customer's MACC.</p>
+  <div class="pillrow reveal" style="margin-top:4px;">
+    <span class="pillbadge active" style="cursor:default;">SaaS</span><span class="pillbadge active" style="cursor:default;">Azure Application</span><span class="pillbadge active" style="cursor:default;">Azure Container</span><span class="pillbadge active" style="cursor:default;">Azure Virtual Machine</span>
+  </div>
+  <p class="reveal" style="font-size:12px; font-style:italic; color:var(--ink-soft); margin:0 0 4px;">Free and BYOL offers are NOT transactable and don't qualify for co-sell or MACC.</p>
+
+  <div class="flow-track reveal" id="flowTrack2">
+    <div class="flow-line"></div>
+    <div class="flow-steps">
+      <div class="flow-item"><div class="flow-dot">01</div><h4>Publish</h4><p>Package the IP as a transactable offer in Partner Center.</p></div>
+      <div class="flow-item"><div class="flow-dot">02</div><h4>Qualify</h4><p>Pass technical validation &amp; hit $100K ACR.</p></div>
+      <div class="flow-item"><div class="flow-dot">03</div><h4>Earn eligibility</h4><p>Azure IP co-sell eligible status.</p></div>
+      <div class="flow-item"><div class="flow-dot">04</div><h4>Auto-enroll</h4><p>In MACC within about 1 week.</p></div>
+      <div class="flow-item"><div class="flow-dot">05</div><h4>Show up</h4><p>In customer MACC burn-down searches.</p></div>
+    </div>
+  </div>
+  <div class="callout reveal">Enrollment applies at the offer level — every offer, even variants of the same product, must independently qualify.</div>
+
+  <h3 class="blocktitle reveal" style="margin-top:52px;">MACC: Microsoft Azure Consumption Commitment</h3>
+  <p class="sub reveal">A contractual commitment enterprise customers make to spend a set amount on Azure over time (typically 1–3 years). Eligible Marketplace purchases automatically decrement it — "MACC burn-down."</p>
+
+  <div class="statrow reveal-group" id="statRow">
+    <div class="stat reveal" style="--i:0"><div class="val" data-count="100" data-suffix="%">0%</div><div class="lbl">Of pretax purchase counts, via Azure purchase path</div></div>
+    <div class="stat reveal" style="--i:1"><div class="val" data-count="100" data-prefix="$" data-suffix="K">$0K</div><div class="lbl">Trailing 12-mo ACR to reach IP co-sell eligible</div></div>
+    <div class="stat reveal" style="--i:2"><div class="val" data-count="1" data-suffix=" wk">0 wk</div><div class="lbl">Typical MACC auto-enrollment turnaround</div></div>
+  </div>
+  <div class="grid2 reveal-group" style="margin-top:8px;">
+    <div class="card reveal" style="--i:0">
+      <h4>How it works</h4>
+      <ul class="plain">
+        <li>Only offers badged "Azure benefit eligible" count</li>
+        <li>Applies to Azure-exclusive licenses only — hybrid or on-prem deployments don't qualify</li>
+        <li>Contribution posts when Microsoft issues the invoice</li>
+      </ul>
+    </div>
+    <div class="card tint reveal" style="--i:1">
+      <h4>Why Hummingbird cares</h4>
+      <p class="desc">Enterprise buyers actively hunt for MACC-eligible solutions in Q3/Q4 to spend down committed budget. An eligible Hummingbird offer is a faster, friction-free path into that spend — procurement is already approved.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap" class="band band-tint">
+  <div class="inner">
+    <div class="eyebrow reveal">Timeline &amp; ownership</div>
+    <h2 class="display reveal">FY27 Roadmap for Hummingbird</h2>
+    <p class="sub reveal">Click a quarter to see what's in motion.</p>
+
+    <div class="timeline reveal" id="timeline">
+      <div class="tl-track">
+        <div class="tl-line"><div class="tl-line-fill" id="tlFill"></div></div>
+        <button class="tl-stop current active" data-q="0"><div class="tl-dot">Q1</div><div class="tl-label">Foundations</div><div class="tl-sub">Jul–Sep 2026</div></button>
+        <button class="tl-stop" data-q="1"><div class="tl-dot">Q2</div><div class="tl-label">Close the gaps</div><div class="tl-sub">Oct–Dec 2026</div></button>
+        <button class="tl-stop" data-q="2"><div class="tl-dot">Q3</div><div class="tl-label">Earn eligibility</div><div class="tl-sub">Jan–Mar 2027</div></button>
+        <button class="tl-stop" data-q="3"><div class="tl-dot">Q4</div><div class="tl-label">Frontier push</div><div class="tl-sub">Apr–Jun 2027</div></button>
+      </div>
+      <div class="tl-panel" id="tlPanel">
+        <span class="tag-cur">CURRENT</span>
+        <h4>Foundations (in progress)</h4>
+        <ul class="plain">
+          <li>Attribution discipline live — PAL + CPOR on every engagement</li>
+          <li>Baseline current designations &amp; PCS</li>
+          <li>Submit the ScaleFast Nomination Form</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="blocktitle reveal" style="margin-top:56px;">Who owns what</h3>
+    <div class="ownerlist reveal">
+      <div class="owner-head"><div>Owner</div><div>Task</div><div class="ocad">Cadence</div></div>
+      <div class="owner-row"><div class="oname"><span class="odot"></span>Delivery Leads</div><div class="otask">PAL tagging at kickoff</div><div class="ocad">Every project</div></div>
+      <div class="owner-row"><div class="oname"><span class="odot"></span>Partner Operations</div><div class="otask">CPOR claims</div><div class="ocad">Within 120 days; tracked weekly</div></div>
+      <div class="owner-row"><div class="oname"><span class="odot"></span>Partner Ops + Marketing</div><div class="otask">Designation &amp; PCS tracking</div><div class="ocad">Monthly review</div></div>
+      <div class="owner-row"><div class="oname"><span class="odot"></span>Solution / Practice Leads</div><div class="otask">Specialization skilling targets</div><div class="ocad">Quarterly</div></div>
+      <div class="owner-row"><div class="oname"><span class="odot"></span>Marketing</div><div class="otask">Marketplace offer publishing &amp; refresh</div><div class="ocad">Quarterly</div></div>
+      <div class="owner-row"><div class="oname"><span class="odot"></span>Solution Lead + Marketing</div><div class="otask">ScaleFast nomination, coaching &amp; BOM</div><div class="ocad">Nomination now; BOM by Go</div></div>
+      <div class="owner-row"><div class="oname"><span class="odot"></span>CEO / VP Sales sponsor</div><div class="otask">Frontier Partner Specialization program</div><div class="ocad">FY27 milestone owner</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="eyebrow reveal">Appendix</div>
+  <h2 class="display reveal">Resources &amp; Glossary</h2>
+  <div class="grid2">
+    <div class="reveal">
+      <h3 class="blocktitle">Glossary</h3>
+      <div class="glossary">
+        <div class="gterm"><b>MACC</b><span>Microsoft Azure Consumption Commitment</span></div>
+        <div class="gterm"><b>PAL</b><span>Partner Admin Link</span></div>
+        <div class="gterm"><b>CPOR</b><span>Customer Partner of Record</span></div>
+        <div class="gterm"><b>DPOR</b><span>Digital Partner of Record</span></div>
+        <div class="gterm"><b>PCS</b><span>Partner Capability Score</span></div>
+        <div class="gterm"><b>ACR</b><span>Azure Consumed Revenue</span></div>
+        <div class="gterm"><b>CSD</b><span>Certified Software Designation</span></div>
+        <div class="gterm"><b>MAICPP</b><span>Microsoft AI Cloud Partner Program</span></div>
+        <div class="gterm"><b>BOM</b><span>ScaleFast bill of materials: email, pitch deck, battlecard</span></div>
+        <div class="gterm"><b>CACA</b><span>Neural Impact Customer Acquisition &amp; Capability Assessment</span></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <h3 class="blocktitle">Resources</h3>
+      <div class="linklist">
+        <div class="linkrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>partner.microsoft.com/partnership/frontier-accelerate</div>
+        <div class="linkrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>partner.microsoft.com/asset</div>
+        <div class="linkrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>partner.microsoft.com/partnership/marketplace</div>
+        <div class="linkrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>learn.microsoft.com/partner-center</div>
+        <div class="linkrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>aka.ms/ScaleFast (per Microsoft's ScaleFast deck)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div style="display:flex; align-items:center; justify-content:center; gap:7px; margin-bottom:8px;">
+    <svg viewBox="0 0 512 512" width="15" height="15" style="fill:var(--red);"><path d="M139.7 23.52c-9.1 30.54-16.5 61.64-12.7 91.58 4.2 32.7 21 64.9 65.7 95.7-53.6 74.8-86.1 204.4-59.3 277.7 10.9-54 14.2-97.8 53.5-144.6 77.5-25.6 123.9-37.6 140.3-125.7 6.2-14.7 12.6-19.3 31.9-24.7 10.6-2.9 22.2-7.5 22.1-19.2-.2-49.3-28.3-68.4-57.6-67.9-29.4.5-60 20.6-65.4 49.8-6 1.8-11.9 4.5-17.7 8-62.9-43.7-82.1-85.86-100.8-140.68zM32.03 107c10.8 27.2 26.44 54.6 49.2 76.1 24.27 22.9 56.47 39.3 100.87 42.2-34.5-24.2-54.8-50.3-65.2-77.2-29.4-10.9-56.47-25-84.87-41.1zm300.07 26.3a12.24 12.24 0 0 1 12.2 12.2 12.24 12.24 0 0 1-12.2 12.2 12.24 12.24 0 0 1-12.2-12.2 12.24 12.24 0 0 1 12.2-12.2zm60 56.1c-3.5 5.1-7.1 10.2-16.1 13.2 33.9 25.3 79.1 76.5 104 105-11.2-33.2-55.8-88.6-87.9-118.2z"/></svg>
+    <span style="font-family:'Archivo',sans-serif; font-weight:700; font-size:12.5px; color:var(--ink);">Hummingbird</span>
+  </div>
+  © 2026 Hummingbird. All rights reserved | Confidential
+</footer>
+
+<button id="toTop" aria-label="Back to top">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function(){
+  /* ---------- Hero headline stagger ---------- */
+  const heroTitle = document.getElementById('heroTitle');
+  const words = "FY27 Microsoft Partner Playbook".split(' ');
+  heroTitle.innerHTML = words.map((w,i) => `<span class="word" style="animation-delay:${0.25 + i*0.09}s">${w}</span>`).join(' ');
+
+  /* ---------- Scroll progress + back to top ---------- */
+  const progress = document.getElementById('progress');
+  const toTop = document.getElementById('toTop');
+  function onScroll(){
+    const doc = document.documentElement;
+    const scrollTop = doc.scrollTop || document.body.scrollTop;
+    const height = doc.scrollHeight - doc.clientHeight;
+    progress.style.width = (height > 0 ? (scrollTop/height)*100 : 0) + '%';
+    toTop.classList.toggle('show', scrollTop > 500);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  /* ---------- Nav active link + sliding indicator ---------- */
+  const navLinks = Array.prototype.slice.call(document.querySelectorAll('nav.links a'));
+  const navIndicator = document.getElementById('navIndicator');
+  const navWrap = document.getElementById('navLinks');
+  const jump = document.getElementById('jump');
+  const sections = ['overview','foundation','credentials','frontier','scalefast','gtm','roadmap','resources']
+    .map(id => document.getElementById(id)).filter(Boolean);
+
+  function moveIndicator(link){
+    if(!link){ navIndicator.style.width = '0px'; return; }
+    const lr = link.getBoundingClientRect(), wr = navWrap.getBoundingClientRect();
+    navIndicator.style.left = (lr.left - wr.left) + 'px';
+    navIndicator.style.width = lr.width + 'px';
+  }
+
+  function updateActive(){
+    let activeId = null;
+    sections.forEach(s => { if(s.getBoundingClientRect().top - 90 <= 0) activeId = s.id; });
+    let activeLink = null;
+    navLinks.forEach(a => {
+      const isActive = a.getAttribute('data-sec') === activeId;
+      a.classList.toggle('active', isActive);
+      if(isActive) activeLink = a;
+    });
+    moveIndicator(activeLink);
+    if(activeId) jump.value = activeId; else jump.value = 'hero';
+  }
+  window.addEventListener('scroll', updateActive, {passive:true});
+  window.addEventListener('resize', updateActive);
+  jump.addEventListener('change', function(){
+    const el = document.getElementById(this.value);
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  onScroll(); updateActive();
+  window.addEventListener('load', updateActive);
+
+  /* ---------- Scroll reveal ---------- */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:0.15, rootMargin:'0px 0px -40px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  /* ---------- Flow track draw-in ---------- */
+  const flowTracks = document.querySelectorAll('.flow-track');
+  const fio = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); fio.unobserve(e.target); } });
+  }, { threshold:0.3 });
+  flowTracks.forEach(el => fio.observe(el));
+
+  /* ---------- Tabs (Foundation PAL/CPOR/DPOR) ---------- */
+  document.querySelectorAll('.tabbar').forEach(bar => {
+    const panelsWrap = bar.nextElementSibling;
+    bar.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        bar.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const key = btn.getAttribute('data-tab');
+        panelsWrap.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.getAttribute('data-panel') === key));
+      });
+    });
+  });
+
+  /* ---------- Segmented toggles (Frontier req/unlock, Co-sell tiers) ---------- */
+  document.querySelectorAll('.segbar').forEach(bar => {
+    const panelsWrap = bar.nextElementSibling;
+    bar.querySelectorAll('.seg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        bar.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const key = btn.getAttribute('data-seg');
+        panelsWrap.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.getAttribute('data-segpanel') === key));
+      });
+    });
+  });
+
+  /* ---------- Accordions ---------- */
+  function setPanelHeight(item, open){
+    const panel = item.querySelector('.acc-panel');
+    const inner = item.querySelector('.acc-panel-inner');
+    if(open){ panel.style.maxHeight = inner.scrollHeight + 'px'; }
+    else{ panel.style.maxHeight = '0px'; }
+  }
+  document.querySelectorAll('[data-accordion]').forEach(group => {
+    const items = group.querySelectorAll('.acc-item');
+    items.forEach(item => {
+      const head = item.querySelector('.acc-head');
+      if(item.classList.contains('open')) setPanelHeight(item, true);
+      head.addEventListener('click', () => {
+        const willOpen = !item.classList.contains('open');
+        item.classList.toggle('open', willOpen);
+        setPanelHeight(item, willOpen);
+      });
+    });
+  });
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.acc-item.open').forEach(item => setPanelHeight(item, true));
+  });
+
+  /* ---------- Credential pills (toggle highlight) ---------- */
+  document.querySelectorAll('#pillRow .pillbadge').forEach(p => {
+    p.addEventListener('click', () => p.classList.toggle('active'));
+  });
+
+  /* ---------- Stat count-up ---------- */
+  const statEls = document.querySelectorAll('.stat .val');
+  const sio = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(!e.isIntersecting) return;
+      sio.unobserve(e.target);
+      const el = e.target;
+      const target = parseFloat(el.getAttribute('data-count'));
+      const prefix = el.getAttribute('data-prefix') || '';
+      const suffix = el.getAttribute('data-suffix') || '';
+      const dur = 1100;
+      const t0 = performance.now();
+      function tick(now){
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = Math.round(target * eased);
+        el.textContent = prefix + val + suffix;
+        if(p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }, { threshold:0.5 });
+  statEls.forEach(el => sio.observe(el));
+
+  /* ---------- Roadmap timeline ---------- */
+  const QUARTERS = [
+    { tag:true, h:"Foundations (in progress)", items:["Attribution discipline live — PAL + CPOR on every engagement","Baseline current designations & PCS","Submit the ScaleFast Nomination Form"] },
+    { tag:false, h:"Close the gaps", items:["Close specialization gaps: Copilot, AI Apps/Platform, Data Security, IAM","Publish / refresh Marketplace offers","ScaleFast: evaluation, Neural Impact coaching, build the BOM"] },
+    { tag:false, h:"Earn eligibility", items:["ScaleFast Go: sellers briefed, first accounts engaged","Hit Azure IP co-sell eligibility ($100K ACR) & MACC enrollment","Track Frontier Partner Specialization enrollment opening"] },
+    { tag:false, h:"Frontier push", items:["Enroll in Frontier Partner Specialization audit","Complete badge-to-specialization cutover before June 2027"] },
+  ];
+  const tlStops = document.querySelectorAll('.tl-stop');
+  const tlPanel = document.getElementById('tlPanel');
+  const tlFill = document.getElementById('tlFill');
+  function renderQuarter(idx){
+    const q = QUARTERS[idx];
+    tlPanel.innerHTML = (q.tag ? '<span class="tag-cur">CURRENT</span>' : '') +
+      '<h4>' + q.h + '</h4><ul class="plain">' + q.items.map(t => '<li>' + t + '</li>').join('') + '</ul>';
+    tlStops.forEach(s => s.classList.toggle('active', parseInt(s.getAttribute('data-q'),10) === idx));
+    tlFill.style.width = (8 + idx * 30.6) + '%';
+  }
+  tlStops.forEach(s => s.addEventListener('click', () => renderQuarter(parseInt(s.getAttribute('data-q'),10))));
+  renderQuarter(0);
+})();
+</script>
+
+</body>
+</html>
